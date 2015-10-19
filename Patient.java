@@ -10,7 +10,7 @@ public class Patient{
 	private String illness;
 	private Patient nextPatient = null;
 	private Patient prevPatient = null;
-	private static  int patientCount = 1;
+	//private static  int patientCount = 1;
 	
 	Patient(String name, int age, String illness){
 		this.name= name;
@@ -22,7 +22,7 @@ public class Patient{
 		if(this.nextPatient == null){
 				this.nextPatient = newPatient;
 				newPatient.prevPatient = this;
-				patientCount++;
+				//patientCount++;
 		}else{
 			this.nextPatient.addPatient(newPatient);
 		}
@@ -33,13 +33,13 @@ public class Patient{
 			return false;
 		}else if(this.prevPatient == null && this.name.equals(patient.name)){
 			//still have to delete first patient from elsewhere but keeps patient count true
-			patientCount--;
+			//patientCount--;
 			nextPatient.prevPatient = null;
 			return true;
 		}else if(this.nextPatient.name.equals(patient.name)){
 			nextPatient.nextPatient.prevPatient = this;
 			this.nextPatient = nextPatient.nextPatient;
-			patientCount--;
+			//patientCount--;
 			return true;
 		}else{
 			return this.nextPatient.deletePatient(patient);
@@ -53,7 +53,7 @@ public class Patient{
 			this.nextPatient.printPatientList();
 		}else{
 			System.out.println(this.name + ", " + this.age + ", " + this.illness);
-			System.out.println("Total number of patients: " + this.patientCount);
+			System.out.println("Total number of patients: " + this.countBackwards());
 		}
 	}
 	
@@ -64,7 +64,26 @@ public class Patient{
 			this.prevPatient.printBackwards();
 		}else{
 			System.out.println(this.name + ", " + this.age + ", " + this.illness);
-			System.out.println("Total number of patients: " + this.patientCount);
+			System.out.println("Total number of patients: " + this.countPatients());
+		}
+	}
+	
+	public int countPatients(){
+		int patientCount = 1;
+		if(this.nextPatient != null){
+			return patientCount += this.nextPatient.countPatients();
+			
+		}else{
+			return 1;
+		}
+	}
+	
+	public int countBackwards(){
+		int patientCount = 1;
+		if(this.prevPatient != null){
+			return patientCount += this.prevPatient.countBackwards();
+		}else{
+			return 1;
 		}
 	}
 }
