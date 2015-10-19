@@ -34,6 +34,7 @@ public class Patient{
 		}else if(this.prevPatient == null && this.name.equals(patient.name)){
 			//still have to delete first patient from elsewhere but keeps patient count true
 			patientCount--;
+			nextPatient.prevPatient = null;
 			return true;
 		}else if(this.nextPatient.name.equals(patient.name)){
 			nextPatient.nextPatient.prevPatient = this;
