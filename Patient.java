@@ -8,21 +8,21 @@ public class Patient{
 	private String name;
 	private int age;
 	private String illness;
-	private Patient nextPatient = null;
-	private Patient prevPatient = null;
-	//private static  int patientCount = 1;
+	private Patient nextPatient;
+	private Patient prevPatient;
 	
 	Patient(String name, int age, String illness){
 		this.name= name;
 		this.age = age;
 		this.illness = illness;
+		this.nextPatient = null;
+		this.prevPatient = null;
 	}
 	
 	public void addPatient(Patient newPatient){
 		if(this.nextPatient == null){
 				this.nextPatient = newPatient;
 				newPatient.prevPatient = this;
-				//patientCount++;
 		}else{
 			this.nextPatient.addPatient(newPatient);
 		}
@@ -32,14 +32,13 @@ public class Patient{
 		if(this.nextPatient == null){
 			return false;
 		}else if(this.prevPatient == null && this.name.equals(patient.name)){
-			//still have to delete first patient from elsewhere but keeps patient count true
-			//patientCount--;
+			//still have to delete first patient from elsewhere
+			//but ensures nothing is pointing backwards at the object
 			nextPatient.prevPatient = null;
 			return true;
 		}else if(this.nextPatient.name.equals(patient.name)){
 			nextPatient.nextPatient.prevPatient = this;
 			this.nextPatient = nextPatient.nextPatient;
-			//patientCount--;
 			return true;
 		}else{
 			return this.nextPatient.deletePatient(patient);
@@ -49,10 +48,10 @@ public class Patient{
 	//print forwards through the list
 	public void printPatientList(){
 		if (this.nextPatient != null) {
-			System.out.println(this.name + ", " + this.age + ", " + this.illness);
+			System.out.println(this.name + "\t" + this.age + "\t" + this.illness);
 			this.nextPatient.printPatientList();
 		}else{
-			System.out.println(this.name + ", " + this.age + ", " + this.illness);
+			System.out.println(this.name + "\t" + this.age + "\t" + this.illness);
 			System.out.println("Total number of patients: " + this.countBackwards());
 		}
 	}
@@ -60,10 +59,10 @@ public class Patient{
 	//print backwards through the list
 	public void printBackwards(){
 		if (this.prevPatient != null) {
-			System.out.println(this.name + ", " + this.age + ", " + this.illness);
+			System.out.println(this.name + "\t" + this.age + "\t" + this.illness);
 			this.prevPatient.printBackwards();
 		}else{
-			System.out.println(this.name + ", " + this.age + ", " + this.illness);
+			System.out.println(this.name + "\t" + this.age + "\t" + this.illness);
 			System.out.println("Total number of patients: " + this.countPatients());
 		}
 	}
