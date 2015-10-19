@@ -21,6 +21,7 @@ public class Patient{
 	public void addPatient(Patient newPatient){
 		if(this.nextPatient == null){
 				this.nextPatient = newPatient;
+				newPatient.prevPatient = this;
 				patientCount++;
 		}else{
 			this.nextPatient.addPatient(newPatient);
@@ -35,6 +36,7 @@ public class Patient{
 			patientCount--;
 			return true;
 		}else if(this.nextPatient.name.equals(patient.name)){
+			nextPatient.nextPatient.prevPatient = this;
 			this.nextPatient = nextPatient.nextPatient;
 			patientCount--;
 			return true;
@@ -43,10 +45,22 @@ public class Patient{
 		}
 	}
 	
+	//print forwards through the list
 	public void printPatientList(){
 		if (this.nextPatient != null) {
 			System.out.println(this.name + ", " + this.age + ", " + this.illness);
 			this.nextPatient.printPatientList();
+		}else{
+			System.out.println(this.name + ", " + this.age + ", " + this.illness);
+			System.out.println("Total number of patients: " + this.patientCount);
+		}
+	}
+	
+	//print backwards through the list
+	public void printBackwards(){
+		if (this.prevPatient != null) {
+			System.out.println(this.name + ", " + this.age + ", " + this.illness);
+			this.prevPatient.printBackwards();
 		}else{
 			System.out.println(this.name + ", " + this.age + ", " + this.illness);
 			System.out.println("Total number of patients: " + this.patientCount);

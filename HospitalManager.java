@@ -47,13 +47,17 @@ public class HospitalManager{
 		patientListStart.addPatient(tenthPatient);
 		
 		//messing with the list
+		//iterate forward
 		patientListStart.printPatientList();
+		//iterate backwards
+		tenthPatient.printBackwards();
 		System.out.println("\nDeleting patients from linked list...\n");
-		System.out.println(patientListStart.deletePatient(firstPatient));
+		patientListStart.deletePatient(firstPatient);
 		patientListStart = secondPatient;
 		patientListStart.deletePatient(fourthPatient);
 		patientListStart.deletePatient(ninthPatient);
 		patientListStart.printPatientList();
+		tenthPatient.printBackwards();
 		
 	}
 }
