@@ -1,3 +1,9 @@
+/*
+* Week 4 Day 7
+* PiJ 2015 - Sarah Connor & Chris Grocott
+* Exercise 7 Queues
+*/
+
 public class Queue{
 	
 	private LinkedInt element;

@@ -1,3 +1,10 @@
+/*
+* Week 4 Day 8
+* PiJ 2015 - Sarah Connor & Chris Grocott
+* Exercise 1 Supermarket queue
+* object person that can be used in a PersonQueue
+*/
+
 public class Person{
 	private String name;
 	Person nextPerson;
@@ -40,6 +47,7 @@ public class Person{
 		}
 	}
 	
+	//returns a string of all objects Person in a queue concatenated
 	public String toString() {
 		String myName = this.getName() + "\n";
 		if(this.getNextPerson() == null) {
