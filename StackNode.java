@@ -30,6 +30,10 @@ public class StackNode{
 	}
 
 	//setters
+	public void setInt(int num){
+		this.num = num;
+	}
+
 	public void setNext(StackNode next){
 		this.nextNode = next;
 	}
