@@ -6,10 +6,10 @@
 
 public class TestList{
 	public static void main(String[] args){
-		int[] myArray = {1,2,3,4,5};
+		int[] myArray = {5,1,2,3,4};
 		ListUtilities myList = new ListUtilities();
 		myList = myList.arrayToList(myArray);
-		
+		myList = myList.returnToStart();
 		System.out.println(myList.prettyPrint());
 	}
 }
