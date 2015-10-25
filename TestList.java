@@ -6,11 +6,11 @@
 
 public class TestList{
 	public static void main(String[] args){
-		int[] myArray = {1,2,3,4,5,10,9,8,7};
+		int[] myArray = {12,1,9,3,6,5,10,2,8,7,4,11};
 		ListUtilities myList = new ListUtilities();
 		myList = myList.arrayToList(myArray);
-		myList.bubbleSort();
-		myList = myList.returnToStart();
+		myList = myList.quicksort();
 		System.out.println(myList.prettyPrint());
+
 	}
 }

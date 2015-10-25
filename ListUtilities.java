@@ -145,70 +145,222 @@ public class ListUtilities{
 			return this;
 		}
 	}
+
+	//method to go to the end of a list
+	public ListUtilities goToEnd(){
+		ListUtilities temp = new ListUtilities();
+		if(this.nextNum != null){
+			temp = this.nextNum.goToEnd();
+			return temp;
+		}else{
+			//System.out.println("Returned to... " + this.num);
+			return this;
+		}
+	}
+
+	//measures the size of a list
+	public int size(){
+		ListUtilities start = this.returnToStart();
+		int count = 1;
+		while(start.nextNum != null){
+			count++;
+			start = start.nextNum;
+		}
+		return count;
+	}
+
+	//swap a linked node forward in the list
+	public void swapF(ListUtilities temp){
+		//if not first, make c prev be a
+		if(this.prevNum != null){
+			//make a point to c
+			this.prevNum.nextNum = temp;
+			//make c prev be a
+			temp.prevNum = this.prevNum;
+		}else{
+			//else make it point at nothing
+			temp.prevNum = null;
+		}
+		//if c is not last
+		if(temp.nextNum != null){
+			//make b next be d
+			this.nextNum = temp.nextNum;
+			//make d prev be b
+			this.nextNum.prevNum = this;
+		}else{
+			//else have b point at nothing
+			this.nextNum = null;
+		}
+		
+		//make b prev be c
+		this.prevNum = temp;
+		//make c next be b
+		temp.nextNum = this;
+	}
+
+	//swap a linked node backward in the list
+	public void swapB(ListUtilities temp){
+		//make temp point to b
+		temp = this.prevNum;
+		
+		//if b is not first, make 
+		if(temp.prevNum != null){
+			//make a next be c
+			temp.prevNum.nextNum = this;
+			//make c prev be a
+			this.prevNum = temp.prevNum;
+		}else{
+			//else make it point at nothing
+			this.prevNum = null;
+		}
+		//if c is not last
+		if(this.nextNum != null){
+			//make b next be d
+			temp.nextNum = this.nextNum;
+			//make d prev be b
+			this.nextNum.prevNum = temp;
+		}else{
+			//else have 1 point at nothing
+			this.nextNum = null;
+		}
+		
+		//make 1 prev be 2
+		this.nextNum = temp;
+		//make 2 next be 1
+		temp.prevNum = this;
+	}
+	
 		
 
 	//Sorts a linked list with a bubble sort
 	public ListUtilities bubbleSort(){
-		
-		boolean swaps = true;
-		ListUtilities numToSort = new ListUtilities();
-		//make numtosort point to 1
-		numToSort = this;
-		ListUtilities temp = new ListUtilities();
-		//make temp point to 2
-		temp = this.nextNum;
+		boolean swaps = true;		
 		
 		while(swaps == true){
-
 			//no swaps to begin with
 			swaps = false;
 
 			//if not end of list
 			if (this.nextNum != null){
+				ListUtilities temp = new ListUtilities();
+				//make temp point to 2
+				temp = this.nextNum;
 				//if 1 is greater than 2
 				if(this.num > this.nextNum.num){
 					//it swapped
 					swaps = true;
-					
-					//if not first, make 2 prev be 1 prev
-					if(this.prevNum != null){
-						//make num prev point to 2
-						numToSort.prevNum.nextNum = temp;
-						//make 2 prev be 1 prev
-						temp.prevNum = numToSort.prevNum;
-					}else{
-						//else make it point at nothing
-						temp.prevNum = null;
-					}
-					//if 2 is not last
-					if(temp.nextNum != null){
-						//make 1 next be 3
-						numToSort.nextNum = temp.nextNum;
-						//make 3 prev be 1
-						numToSort.nextNum.prevNum = numToSort;
-					}else{
-						//else have 1 point at nothing
-						numToSort.nextNum = null;
-					}
-					
-					//make 1 prev be 2
-					numToSort.prevNum = temp;
-					//make 2 next be 1
-					temp.nextNum = numToSort;
+					swapF(temp);
 				}
 
 			//keep going until you hit end of list
 			temp.bubbleSort();
-
 			} 
+
 			//if at end of list and swaps were made, return to beginning and try again
 			if (this.nextNum == null && swaps == true){
 
 				this.returnToStart().bubbleSort();
 			}
-
 		}
-		//while(swaps == true);
+	//return beginning of list
 	return this.returnToStart();
 	}
+
+	//sorts a linked list with a cocktail sort
+	public ListUtilities cocktailSort(){
+		boolean swaps = true;
+		ListUtilities temp = new ListUtilities();
+		
+		while(swaps == true){
+			//no swaps to begin with
+			swaps = false;
+
+			//if not end of list
+			if (this.nextNum != null){
+				
+				//make temp point to next
+				temp = this.nextNum;
+
+				//if b is greater than c
+				if(this.num > this.nextNum.num){
+					//it swapped
+					swaps = true;
+					
+					swapF(temp);
+				}
+			//keep going until you hit end of list
+			temp.cocktailSort();
+			}
+			//if not beginning of list
+			if (this.prevNum != null){
+				//if c is smaller than b
+				if(this.num < this.prevNum.num){
+					//it swapped
+					swaps = true;
+					swapB(temp);
+				}
+				//keep going until hit beginning of list
+				temp.cocktailSort();
+			}
+		}
+	//return beginning of list
+	return this.returnToStart();
+	}
+
+	//quicksort calls on partition recursively
+	public ListUtilities quicksort(){
+		
+		ListUtilities lo = this.returnToStart();
+		ListUtilities hi = this.goToEnd();
+		ListUtilities sorted = this.partition(lo, hi);
+		
+		return sorted.returnToStart();		
+	}
+	//recursive call for quicksort
+	public ListUtilities partition(ListUtilities start, ListUtilities pivot){
+		boolean swap = false;
+		ListUtilities lo = start;
+		ListUtilities hi = pivot;
+		while( lo != pivot){
+			//System.out.println("lo " + lo.num + " hi " + hi.num + " pivot " + pivot.num + " start " + start.num);
+			if(lo.num > pivot.num){
+				ListUtilities next = lo.nextNum;
+				if(lo == start){
+					start = next;
+				}
+				//if lo is not first
+				if(lo.prevNum != null){
+					//remove current lo
+					lo.prevNum.nextNum = lo.nextNum;
+					next.prevNum = lo.prevNum;
+				}else{
+					next.prevNum = null;
+				}
+				//if hi is not last
+				if(hi.nextNum != null){
+					//connect with element after current hi
+					lo.nextNum = hi.nextNum;
+					hi.nextNum.prevNum = lo;
+				}else{
+					//connect with element after current hi
+					lo.nextNum = null;
+				}
+				//connect with pivot
+				lo.prevNum = hi;
+				hi.nextNum = lo;
+
+				hi = lo;
+				lo = next;
+			}else{
+				lo = lo.nextNum;
+			}
+		}
+		if(start != pivot.prevNum && start != pivot){
+			start = partition(start, pivot.prevNum);
+		}
+		if(pivot != hi){
+			partition(pivot.nextNum, hi);
+		}
+		return start;
+	}		
 }
