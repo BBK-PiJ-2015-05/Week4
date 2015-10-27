@@ -19,7 +19,7 @@ public class MyMap implements SimpleMap{
 	/**
 	* Puts a new String in the map.
 	*
-	* If the key is already in the map, nothing is done.
+	* If the key is already in the map, adds a linked node
 	*/
 	public void put(int key, String name){
 		HashStringNode newName = new HashStringNode(name);
@@ -34,7 +34,7 @@ public class MyMap implements SimpleMap{
 
 
 	/**
-	* Returns the name associated with that key,
+	* Returns all names associated with that key,
 	* or null if there is none.
 	*/
 	public String get(int key){
@@ -45,13 +45,8 @@ public class MyMap implements SimpleMap{
 			}else{
 				String nodes = start.getName();
 				while(start.getNext() != null){
-					try{
-						//System.out.println(start.getName());
 						start = start.getNext();
-						nodes = nodes + ", " + start.getNext().getName();
-					}catch(NullPointerException e){
-					//do nothing
-					}	
+						nodes = nodes + ", " + start.getName();
 				}
 				return nodes;
 			}

@@ -1,6 +1,7 @@
 /*
 * Week 4 Day 8
 * PiJ 2015 - Sarah Connor & Chris Grocott
+* Exercise 1 Supermarket queue
 * Linked List of objects Person
 * Implements the PersonQueue
 */
