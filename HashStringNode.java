@@ -24,12 +24,22 @@ public class HashStringNode{
 		return this.nextName;
 	}
 
+	public HashStringNode getLast(){
+		if(this.nextName != null){
+			this.nextName.getLast();
+		}
+		return this;
+	}
+
 	//setters
 	public void setName(String name){
 		this.name = name;
 	}
 
 	public void setNext(HashStringNode next){
+		if(this.nextName != null){
+			this.nextName.setNext(next);
+		}
 		this.nextName = next;
 	}
 }

@@ -22,10 +22,13 @@ public class MyMap implements SimpleMap{
 	* If the key is already in the map, nothing is done.
 	*/
 	public void put(int key, String name){
+		HashStringNode newName = new HashStringNode(name);
 		if(keys[key - 1].getKey() == -1){
-			HashStringNode newName = new HashStringNode(name);
 			keys[key - 1 ].setKey(key);
 			keys[key - 1].setNodeName(newName);
+		}else{
+			HashStringNode start = keys[key - 1].getNodeName();
+			start.getLast().setNext(newName);
 		}
 	}
 
@@ -36,7 +39,23 @@ public class MyMap implements SimpleMap{
 	*/
 	public String get(int key){
 		if(keys[key - 1].getKey() != -1){
-			return keys[key - 1].getNodeName().getName();
+			HashStringNode start = keys[key - 1].getNodeName();
+			if(start.getNext() == null){
+				return start.getName();
+			}else{
+				String nodes = start.getName();
+				while(start.getNext() != null){
+					try{
+						//System.out.println(start.getName());
+						start = start.getNext();
+						nodes = nodes + ", " + start.getNext().getName();
+					}catch(NullPointerException e){
+					//do nothing
+					}	
+				}
+				return nodes;
+			}
+			
 		}else{
 			return "empty";
 		}

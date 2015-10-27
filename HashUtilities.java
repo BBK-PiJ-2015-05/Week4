@@ -25,7 +25,7 @@ public class HashUtilities{
 	public int getKey(){
 		return this.key;
 	}
-	
+
 	public HashStringNode getNodeName(){
 		if(this.name != null){
 			return this.name;	
